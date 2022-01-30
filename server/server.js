@@ -5,14 +5,11 @@ import mongoose from 'mongoose';
 require('dotenv').config();
 import { Message } from './models/Message';
 
-// PUT THIS TO ENV BEFORE COMMIT
-
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/hit-and-miss';
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
-//   PORT=9000 npm start
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -20,7 +17,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Start defining your routes here
 app.get('/', async (req, res) => {
 	//	const resPerPage = 20; // results per page
 	const { page } = req.query || 1; // Page
@@ -37,21 +33,34 @@ app.get('/', async (req, res) => {
 	// .limit(resPerPage);
 });
 
-app.post('/', async (req, res) => {
-	try {
-		const message = new Message({
-			message: req.body.message,
-			addedBy: req.body.addedBy,
-		});
-		await message.save();
-		res.json(message);
-	} catch (err) {
-		res.status(400).json({
-			errors: err.errors,
-			message: 'Cannot add new message',
-			addedBy: 'Cannot add name',
-		});
-	}
+// app.post('/', async (req, res) => {
+// 	try {
+// 		const message = new Message({
+// 			message: req.body.message,
+// 			addedBy: req.body.addedBy,
+// 		});
+// 		await message.save();
+// 		res.json(message);
+// 	} catch (err) {
+// 		res.status(400).json({
+// 			errors: err.errors,
+// 			message: 'Cannot add new message',
+// 			addedBy: 'Cannot add name',
+// 		});
+// 	}
+// });
+
+app.post('/', function (req, res, next) {
+	const message = new Message({
+		message: req.body.message,
+		addedBy: req.body.addedBy,
+	});
+	message.save((err, message) => {
+		if (err) {
+			return next(err);
+		}
+		res.status(201).json(message);
+	});
 });
 
 app.delete('/:id', async (req, res) => {
