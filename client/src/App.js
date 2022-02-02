@@ -7,19 +7,24 @@ import { getMessages } from './services/services';
 const App = () => {
 	const [game, setGame] = useState('');
 	const [name, setName] = useState('');
+	const [randomMessage, setRandomMessage] = useState();
 	const [messages, setMessages] = useState([]);
 
 	useEffect(() => {
 		getMessages(setMessages);
 	}, []);
 
-	console.log('GAME', game);
-	console.log('NAME', name);
-	console.log('MESSAGES', messages);
+	const chooseRandom = () => {
+		const randomValue = messages[Math.floor(Math.random() * messages.length)];
+		console.log('RANDOM VALUE', randomValue);
+		setRandomMessage(randomValue);
+		return randomValue;
+	};
 
 	return (
 		<div>
 			<h1>RANDOMIZE ME YO!</h1>
+			<button onClick={chooseRandom}>Randomize now!</button>
 			<Input
 				game={game}
 				setGame={setGame}
@@ -28,7 +33,7 @@ const App = () => {
 				messages={messages}
 				setMessages={setMessages}
 			/>
-			<List messages={messages} />
+			<List messages={messages} randomMessage={randomMessage} />
 		</div>
 	);
 };

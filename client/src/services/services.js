@@ -38,3 +38,17 @@ export const getMessages = (setMessages) => {
 			setMessages(json);
 		});
 };
+
+export const handleDelete = (id) => {
+	fetch(`http://localhost:8080/${id}`, {
+		method: 'DELETE',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+	})
+		.then((res) => res.json())
+		.then(() => {
+			window.location.reload();
+		});
+};

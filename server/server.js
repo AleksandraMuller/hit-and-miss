@@ -18,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', async (req, res) => {
-	//	const resPerPage = 20; // results per page
+	// const resPerPage = 20; // results per page
 	const { page } = req.query || 1; // Page
 	Message.find((err, messages) => {
 		if (err) {
@@ -27,9 +27,9 @@ app.get('/', async (req, res) => {
 		} else {
 			res.json(messages);
 		}
-	});
-	// .skip(resPerPage * page - resPerPage)
-	// .sort({ createdAt: 'desc' })
+	})
+		// .skip(resPerPage * page - resPerPage)
+		.sort({ createdAt: 'desc' });
 	// .limit(resPerPage);
 });
 
@@ -67,7 +67,6 @@ app.delete('/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
 		const remove = await Message.findByIdAndDelete(id);
-		remove.save();
 		res.status(201).json(remove);
 	} catch (err) {
 		res.status(400).json({

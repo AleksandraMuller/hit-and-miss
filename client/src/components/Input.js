@@ -20,7 +20,7 @@ const Input = ({ game, setGame, name, setName, messages, setMessages }) => {
 					id='name'
 					value={name}
 					onChange={({ target }) => setName(target.value)}></input>
-				<button type='submit'>Add Login</button>
+				<button type='submit'>Add to randomizer</button>
 			</form>
 		</div>
 	);
