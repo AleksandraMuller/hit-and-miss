@@ -4,6 +4,8 @@ import { handleDelete } from '../services/services';
 
 const Container = styled.div`
 	background: ${(props) => (props.randomMessageBool ? 'green' : 'white')};
+	margin: 0 auto;
+	width: 50%;
 `;
 
 const List = ({ messages, randomMessage }) => {

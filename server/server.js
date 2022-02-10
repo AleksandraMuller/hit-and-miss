@@ -76,6 +76,18 @@ app.delete('/:id', async (req, res) => {
 	}
 });
 
+app.delete('/', async (req, res) => {
+	try {
+		const remove = await Message.deleteMany();
+		res.status(201).json(remove);
+	} catch (err) {
+		res.status(400).json({
+			message: 'Cannot delete',
+			errors: err.errors,
+		});
+	}
+});
+
 // Start the server
 app.listen(port, () => {
 	console.log(`Server running on http://localhost:${port}`);

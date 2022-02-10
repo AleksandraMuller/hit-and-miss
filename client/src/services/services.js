@@ -52,3 +52,17 @@ export const handleDelete = (id) => {
 			window.location.reload();
 		});
 };
+
+export const deleteAll = () => {
+	fetch(`http://localhost:8080`, {
+		method: 'DELETE',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+	})
+		.then((res) => res.json())
+		.then(() => {
+			window.location.reload();
+		});
+};

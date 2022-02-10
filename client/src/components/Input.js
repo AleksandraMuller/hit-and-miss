@@ -1,9 +1,14 @@
 import React from 'react';
 import { addMessage } from '../services/services';
+import styled from 'styled-components';
+
+const Container = styled.div`
+	background: #3db2ff;
+`;
 
 const Input = ({ game, setGame, name, setName, messages, setMessages }) => {
 	return (
-		<div>
+		<Container>
 			<form
 				onSubmit={(e) =>
 					addMessage(game, name, setGame, setName, messages, setMessages, e)
@@ -22,7 +27,7 @@ const Input = ({ game, setGame, name, setName, messages, setMessages }) => {
 					onChange={({ target }) => setName(target.value)}></input>
 				<button type='submit'>Add to randomizer</button>
 			</form>
-		</div>
+		</Container>
 	);
 };
 
