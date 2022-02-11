@@ -4,6 +4,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 require('dotenv').config();
 import { Message } from './models/Message';
+import { RandomMessage } from './models/RandomMessage';
 
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/hit-and-miss';
 
@@ -26,6 +27,22 @@ app.get('/', async (req, res) => {
 			res.status(404).json({ error: 'Not found' });
 		} else {
 			res.json(messages);
+		}
+	})
+		// .skip(resPerPage * page - resPerPage)
+		.sort({ createdAt: 'desc' });
+	// .limit(resPerPage);
+});
+
+app.get('/randomize', async (req, res) => {
+	// const resPerPage = 20; // results per page
+	const { page } = req.query || 1; // Page
+	RandomMessage.find((err, randomMessages) => {
+		if (err) {
+			console.log(err);
+			res.status(404).json({ error: 'Not found' });
+		} else {
+			res.json(randomMessages);
 		}
 	})
 		// .skip(resPerPage * page - resPerPage)
@@ -61,6 +78,22 @@ app.post('/', function (req, res, next) {
 		}
 		res.status(201).json(message);
 	});
+});
+
+app.post('/randomize', async (req, res) => {
+	try {
+		const randomMessage = await RandomMessage.updateOne({
+			message: req.body.message,
+			addedBy: req.body.addedBy,
+			createdAt: req.body.createdAt,
+		});
+		res.status(201).json(randomMessage);
+	} catch (err) {
+		res.status(400).json({
+			message: 'Cannot update',
+			errors: err.errors,
+		});
+	}
 });
 
 app.delete('/:id', async (req, res) => {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Input from './components/Input';
 import List from './components/List';
 import Header from './components/Header';
-import { getMessages } from './services/services';
+import { getMessages, addRandomMessage } from './services/services';
 import styled from 'styled-components';
 
 const CardContainer = styled.div`
@@ -26,15 +26,16 @@ const App = () => {
 		getMessages(setMessages);
 	}, []);
 
-	const chooseRandom = () => {
+	const chooseRandom = (e) => {
 		const randomValue = messages[Math.floor(Math.random() * messages.length)];
 		setRandomMessage(randomValue);
+		addRandomMessage(randomValue, e);
 		return randomValue;
 	};
 
 	return (
 		<div>
-			<Header chooseRandom={chooseRandom} />
+			<Header chooseRandom={(e) => chooseRandom(e)} />
 
 			<CardContainer>
 				<Input

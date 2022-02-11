@@ -66,3 +66,23 @@ export const deleteAll = () => {
 			window.location.reload();
 		});
 };
+
+export const addRandomMessage = (randomMessage, event) => {
+	event.preventDefault();
+	fetch(`http://localhost:8080/randomize`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			message: randomMessage.message,
+			addedBy: randomMessage.addedBy,
+			createdAt: randomMessage.createdAt,
+		}),
+	})
+		.then((res) => res.json())
+		.then((json) => {
+			console.log(json);
+		});
+};
