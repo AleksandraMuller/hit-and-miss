@@ -28,7 +28,6 @@ const App = () => {
 
 	const chooseRandom = () => {
 		const randomValue = messages[Math.floor(Math.random() * messages.length)];
-		console.log('RANDOM VALUE', randomValue);
 		setRandomMessage(randomValue);
 		return randomValue;
 	};

@@ -19,6 +19,10 @@ const StyledButton = styled.button`
 	color: #3db2ff;
 	border: 2px #3db2ff solid;
 	background: #fff;
+	font-family: 'News Cycle', sans-serif;
+	:hover {
+		background: #e7f5ff;
+	}
 `;
 const Title = styled.h1`
 	text-align: center;
